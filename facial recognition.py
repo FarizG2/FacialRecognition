@@ -30,10 +30,10 @@ def add_user():
     while True:
         ret, frame = cap.read()
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        boxes = face_recognition.face_locations(rgb)
+        boxes = face_recognition.face_locations(rgb) #Detects where faces are in the picture (returns coordinates of rectangles).
 
         for box in boxes:
-            encoding = face_recognition.face_encodings(rgb, [box])[0]
+            encoding = face_recognition.face_encodings(rgb, [box])[0] #For each detected face, it generates a 128-number vector (a unique signature of the face).
             encodings.append(encoding)
             cv2.rectangle(frame, (box[3], box[0]), (box[1], box[2]), (0, 255, 0), 2)
 
@@ -65,6 +65,7 @@ def recognize_users():
         boxes = face_recognition.face_locations(rgb)
         encodings = face_recognition.face_encodings(rgb, boxes)
 
+        #Compare each detected face with known users
         for encoding, box in zip(encodings, boxes):
             name = "Unknown"
 
